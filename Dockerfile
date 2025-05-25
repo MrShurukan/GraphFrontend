@@ -2,7 +2,6 @@ FROM node:20 as build
 WORKDIR /app
 COPY . .
 RUN npm install
-ENV NODE_ENV=production
 RUN npm run build
 
 FROM nginx:alpine
