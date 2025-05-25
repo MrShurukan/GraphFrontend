@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PaginatedTable from '../components/PaginatedTable';
 import axiosInstance from '../api/axiosInstance';
 import { buildApiFilter } from '../utils/filterBuilder';
@@ -22,7 +22,7 @@ const roleOptions = [
 const UserListPage = () => {
     const [email, setEmail] = useState('');
     const [role, setRole] = useState<number | ''>('');
-    const [page, setPage] = useState(1);
+    const [_, setPage] = useState(1);
     const [refreshKey, setRefreshKey] = useState(0); // для повторного запроса
     const [error, setError] = useState('');
     const [confirmDeleteId, setConfirmDeleteId] = useState<number | null>(null);
@@ -64,7 +64,7 @@ const UserListPage = () => {
         },
         {
             header: 'Действия',
-            accessor: 'action',
+            accessor: 'action' as keyof User,
             render: (_: any, row: User) => (
                 <button className="btn btn-sm btn-danger" onClick={() => setConfirmDeleteId(row.id)}>
                     Удалить

@@ -1,5 +1,5 @@
-type FilterValue<T> = { value: T | null };
-type FilterObject = { [key: string]: FilterValue<any> };
+// type FilterValue<T> = { value: T | null };
+// type FilterObject = { [key: string]: FilterValue<any> };
 type FilterInput<T> = {
     filters: Partial<Record<keyof T, any>>;
     pageNumber?: number;

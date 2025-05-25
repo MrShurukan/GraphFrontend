@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PaginatedTable from '../components/PaginatedTable';
 import axiosInstance from '../api/axiosInstance';
 import { buildApiFilter } from '../utils/filterBuilder';
@@ -46,7 +46,7 @@ const HeroRecordsPage = () => {
     });
 
     const [modalRecord, setModalRecord] = useState<HeroRecord | null>(null);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, _] = useState(10);
     const [refreshKey, setRefreshKey] = useState(0);
 
     const fetchRecords = async (pageNumber: number, pageSize: number) => {
@@ -75,14 +75,14 @@ const HeroRecordsPage = () => {
             render: (val: string) => val.slice(0, 50) + (val.length > 50 ? '...' : '')
         },
         {
-            header: 'Дата', accessor: 'dateTime',
+            header: 'Дата', accessor: 'dateTime' as keyof HeroRecord,
             render: (val: string) => new Date(val).toLocaleString()
         },
-        { header: 'Лайки', accessor: 'likes' },
-        { header: 'Репосты', accessor: 'reposts' },
-        { header: 'Просмотры', accessor: 'views' },
+        { header: 'Лайки', accessor: 'likes' as keyof HeroRecord},
+        { header: 'Репосты', accessor: 'reposts' as keyof HeroRecord},
+        { header: 'Просмотры', accessor: 'views' as keyof HeroRecord},
         {
-            header: 'Действия', accessor: 'actions',
+            header: 'Действия', accessor: 'actions' as keyof HeroRecord,
             render: (_: any, row: HeroRecord) => (
                 <button className="btn btn-sm btn-info" onClick={() => setModalRecord(row)}>
                     Посмотреть полностью
@@ -115,12 +115,12 @@ const HeroRecordsPage = () => {
                 </div>
             </div>
 
-            <PaginatedTable<HeroRecord>
+            <PaginatedTable
                 key={refreshKey}
                 fetchFunction={(pageNumber) => fetchRecords(pageNumber, pageSize)}
                 columns={columns}
                 pageSize={pageSize}
-                onPageSizeChange={setPageSize}
+                //onPageSizeChange={setPageSize}
             />
 
             {/* Упрощённая модалка просмотра */}
