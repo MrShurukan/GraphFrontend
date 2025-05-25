@@ -4,8 +4,6 @@ import axiosInstance from '../api/axiosInstance.ts';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useAuth} from '../components/AuthContext.tsx';
 
-const API_BASE_URL = 'http://localhost:5233'; // Глобальная переменная для URL
-
 function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -23,7 +21,7 @@ function LoginPage() {
         e.preventDefault();
         setError('');
         try {
-            const response = await axiosInstance.post(`${API_BASE_URL}/User/Login`, {
+            const response = await axiosInstance.post(`/User/Login`, {
                 email: email,
                 password: password
             });
