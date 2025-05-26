@@ -1,9 +1,18 @@
-FROM node:20 as build
+# Этап сборки
+FROM node:20-alpine AS build
 WORKDIR /app
-COPY . .
+
+# Копируем package.json и зависимости
+COPY package*.json ./
 RUN npm install
+
+# Копируем остальной исходный код и билдим
+COPY . .
 RUN npm run build
 
-FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+# Этап для копирования билда — без запуска сервера
+FROM alpine:3.18 AS export
+WORKDIR /export
+COPY --from=build /app/dist .
+
+# Этот Dockerfile просто собирает dist/ — nginx его монтирует как volume
