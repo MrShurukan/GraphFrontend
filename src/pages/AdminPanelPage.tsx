@@ -32,6 +32,25 @@ const AdminPanelPage = () => {
         }
     };
 
+    const handleResetMark = async () => {
+        setLoading(true);
+        setResult(null);
+        setError('');
+
+        try {
+            await axiosInstance.post('/HeroRecords/ResetMark');
+            setResult({
+                markedCount: 0,
+                noHeroCount: 0,
+                unknownCategoryCount: 0
+            });
+        } catch (err: any) {
+            setError(err.response?.data?.error || 'Ошибка при сбросе разметки');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="container mt-4">
             <h2>Админ-панель</h2>
@@ -42,6 +61,16 @@ const AdminPanelPage = () => {
                 disabled={loading}
             >
                 {loading ? 'Обработка...' : 'Произвести разметку'}
+            </button>
+
+            <br/><br/>
+
+            <button
+                className="btn btn-danger"
+                onClick={handleResetMark}
+                disabled={loading}
+            >
+                {loading ? 'Обработка...' : 'Сбросить разметку'}
             </button>
 
             {error && <div className="alert alert-danger mt-3">{error}</div>}
