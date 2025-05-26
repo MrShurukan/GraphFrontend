@@ -6,7 +6,8 @@ import UsersListPage from './pages/UsersListPage.tsx';
 import CreateUserPage from './pages/CreateUserPage.tsx';
 import ChartsPage from './pages/ChartsPage.tsx';
 import HeroRecordsPage from './pages/HeroRecordsPage.tsx';
-import UploadCsv from './pages/UploadCsv.tsx';
+import UploadCsv from './pages/UploadCsvPage.tsx';
+import AdminPanelPage from './pages/AdminPanelPage.tsx';
 
 function App() {
     const { isAuthenticated, role } = useAuth();
@@ -21,6 +22,7 @@ function App() {
                 <Route path="/create-user" element={isAuthenticated && role === 'Admin' ? <CreateUserPage /> : <Navigate to="/" />} />
                 <Route path="/users" element={isAuthenticated && role === 'Admin' ? <UsersListPage /> : <Navigate to="/" />} />
                 <Route path="/upload" element={isAuthenticated && role === 'Admin' ? <UploadCsv /> : <Navigate to="/" />} />
+                <Route path="/admin" element={isAuthenticated && role === 'Admin' ? <AdminPanelPage /> : <Navigate to="/" />} />
             </Routes>
         </>
     );

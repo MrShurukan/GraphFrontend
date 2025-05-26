@@ -26,6 +26,9 @@ const Header = () => {
                             <li className="nav-item">
                                 <Link className="nav-link" to="/upload">Выгрузить CSV</Link>
                             </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/admin">Админ панель</Link>
+                            </li>
                         </>
                     )}
                 </ul>

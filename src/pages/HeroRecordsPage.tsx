@@ -28,9 +28,22 @@ const fieldLabels: Record<string, string> = {
     text: 'Текст поста',
     commentUrl: 'Ссылка на комментарий',
     authorName: 'Название автора',
+    classification: 'Классификация',
     fromDateTime: 'От даты',
     toDateTime: 'До даты',
 };
+
+const classificationOptions = [
+    { label: '', value: '' },
+    { label: 'Герои СВО', value: 1 },
+    { label: 'Герои ВОВ', value: 2 },
+    { label: 'Герои Труда', value: 3 },
+    { label: 'МЧС + полиция', value: 4 },
+    { label: 'Герои военных конфликтов', value: 5 },
+    { label: 'Личный контекст', value: 6 },
+    { label: 'Не размечено', value: 7 },
+    { label: 'Нет слова герой', value: 8 },
+];
 
 const HeroRecordsPage = () => {
     const [filters, setFilters] = useState({
@@ -41,6 +54,7 @@ const HeroRecordsPage = () => {
         text: '',
         commentUrl: '',
         authorName: '',
+        classification: '',
         fromDateTime: '',
         toDateTime: '',
     });
@@ -97,14 +111,26 @@ const HeroRecordsPage = () => {
 
             {/* Фильтры */}
             <div className="row mb-3">
-                {Object.entries(filters).map(([key, val]) => (
+                <div className="col-md-3 mb-2">
+                    <label className="form-label">Тип классификации</label>
+                    <select
+                        className="form-select"
+                        value={filters.classification}
+                        onChange={(e) => setFilters({...filters, classification: e.target.value})}
+                    >
+                        {classificationOptions.map(opt => (
+                            <option key={opt.value} value={opt.value}>{opt.label}</option>
+                        ))}
+                    </select>
+                </div>
+                {Object.entries(filters).filter(([key]) => key !== 'classification').map(([key, val]) => (
                     <div className="col-md-3 mb-2" key={key}>
                         <label className="form-label">{fieldLabels[key] || key}</label>
                         <input
                             className="form-control"
                             type={key.includes('DateTime') ? 'datetime-local' : 'text'}
                             value={val}
-                            onChange={(e) => setFilters({ ...filters, [key]: e.target.value })}
+                            onChange={(e) => setFilters({...filters, [key]: e.target.value})}
                         />
                     </div>
                 ))}
@@ -125,7 +151,8 @@ const HeroRecordsPage = () => {
 
             {/* Упрощённая модалка просмотра */}
             {modalRecord && (
-                <div className="position-fixed top-0 start-0 w-100 h-100 bg-light overflow-auto p-4" style={{ zIndex: 2000 }}>
+                <div className="position-fixed top-0 start-0 w-100 h-100 bg-light overflow-auto p-4"
+                     style={{zIndex: 2000}}>
                     <div className="bg-white p-4 rounded shadow">
                         <div className="d-flex justify-content-between align-items-center mb-3">
                             <h5>Запись #{modalRecord.id}</h5>
@@ -136,7 +163,8 @@ const HeroRecordsPage = () => {
                                 <div className="mb-3" key={key}>
                                     <label className="form-label fw-bold">{key}</label>
                                     <textarea className="form-control"
-                                              value={key == "text" ? value.replaceAll("\t", "\n") : String(value)} readOnly rows={2} />
+                                              value={key == "text" ? value.replaceAll("\t", "\n") : String(value)}
+                                              readOnly rows={2}/>
                                 </div>
                             ))}
                         </div>
