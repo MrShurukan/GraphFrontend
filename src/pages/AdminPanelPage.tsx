@@ -51,6 +51,25 @@ const AdminPanelPage = () => {
         }
     };
 
+    const handleRecalculateMetrics = async () => {
+        setLoading(true);
+        setResult(null);
+        setError('');
+
+        try {
+            await axiosInstance.post('/HeroRecords/RecalculateMetrics');
+            setResult({
+                markedCount: 0,
+                noHeroCount: 0,
+                unknownCategoryCount: 0
+            });
+        } catch (err: any) {
+            setError(err.response?.data?.error || 'Ошибка при пересчёте метрик');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <div className="container mt-4">
             <h2>Админ-панель</h2>
@@ -61,6 +80,16 @@ const AdminPanelPage = () => {
                 disabled={loading}
             >
                 {loading ? 'Обработка...' : 'Произвести разметку'}
+            </button>
+
+            <br/><br/>
+
+            <button
+                className="btn btn-primary"
+                onClick={handleRecalculateMetrics}
+                disabled={loading}
+            >
+                {loading ? 'Обработка...' : 'Пересчитать метрики'}
             </button>
 
             <br/><br/>
