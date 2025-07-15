@@ -37,12 +37,11 @@ const classificationOptions = [
     { label: '', value: '' },
     { label: 'Герои СВО', value: 1 },
     { label: 'Герои ВОВ', value: 2 },
-    { label: 'Герои Труда', value: 3 },
-    { label: 'МЧС + полиция', value: 4 },
-    { label: 'Герои военных конфликтов', value: 5 },
-    { label: 'Личный контекст', value: 6 },
-    { label: 'Не размечено', value: 7 },
-    { label: 'Нет слова герой', value: 8 },
+    { label: 'Герои Труда + МЧС + полиция', value: 3 },
+    { label: 'Герои военных конфликтов', value: 4 },
+    { label: 'Личный контекст', value: 5 },
+    { label: 'Не размечено', value: 6 },
+    { label: 'Нет слова герой', value: 7 },
 ];
 
 const HeroRecordsPage = () => {
